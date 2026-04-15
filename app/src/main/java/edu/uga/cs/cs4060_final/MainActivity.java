@@ -1,4 +1,4 @@
-package com.example.cs4060_final;
+package edu.uga.cs.cs4060_final;
 
 import android.os.Bundle;
 

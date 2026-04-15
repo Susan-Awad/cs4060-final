@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs4060final">
         <activity
-            android:name=".MainActivity"
+            android:name="edu.uga.cs.cs4060_final.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
