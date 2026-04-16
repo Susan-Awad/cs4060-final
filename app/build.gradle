@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.cs4060_final'
+    namespace 'edu.uga.cs.cs4060_final'
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.cs4060_final"
+        applicationId "edu.uga.cs.cs4060_final"
         minSdk 24
         targetSdk 36
         versionCode 1
