@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -38,6 +41,23 @@ public class MainMenu extends AppCompatActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         mAuth = FirebaseAuth.getInstance();
+
+        mAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                if( currentUser != null ) {
+                    // if user is signed in
+                    String userEmail = currentUser.getEmail();
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" +
+                            currentUser.getUid() + " email: " + userEmail);
+                } else {
+                    // if user is signed out
+                    Log.d(TAG, "User is not signed in" );
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
@@ -55,8 +75,7 @@ public class MainMenu extends AppCompatActivity {
         } else if (item.getItemId() == R.id.logout) {
             // if clicked, the logout button will sign the user out and take them to the login page
             mAuth.getInstance().signOut();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            finish();
             return true;
         } else if (item.getItemId() == R.id.help) {
             Toast.makeText(this, "Help Clicked", Toast.LENGTH_SHORT).show();

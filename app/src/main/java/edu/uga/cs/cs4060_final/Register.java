@@ -27,6 +27,7 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView newEmail;
     private TextView newPassword;
+    private TextView error;
     private Button register;
 
     @Override
@@ -43,6 +44,7 @@ public class Register extends AppCompatActivity {
         newEmail = findViewById(R.id.editTextTextEmailAddress2);
         newPassword = findViewById(R.id.editTextTextPassword);
         register = findViewById(R.id.button3);
+        error = findViewById(R.id.error2);
 
         // when the user is ready to register, the create user method is called on the firebase instance
         register.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +52,13 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 String email = newEmail.getText().toString();
                 String password = newPassword.getText().toString();
-
                 mAuth = FirebaseAuth.getInstance();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    error.setText("Please enter your email and password.");
+                    error.setVisibility(View.VISIBLE);
+                    return;
+                }
 
                 // creates a new user with the email and password provided
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -60,6 +67,7 @@ public class Register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // if the task is successful, the app will send a message and move the user to login page to login.
+                                    error.setVisibility(View.INVISIBLE);
                                     Toast.makeText(getApplicationContext(),
                                             "Registered user: " + email,
                                             Toast.LENGTH_SHORT).show();
@@ -71,8 +79,9 @@ public class Register extends AppCompatActivity {
                                 } else {
                                     // if the task fails, send the user a message
                                     Log.w(TAG, "createUserWithEmail: failure", task.getException());
-                                    Toast.makeText(Register.this, "Registration failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    String e = task.getException().getMessage().toString();
+                                    error.setText(e);
+                                    error.setVisibility(View.VISIBLE);
                                 }
                             }
                         });

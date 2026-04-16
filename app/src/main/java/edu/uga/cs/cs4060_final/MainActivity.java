@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView user;
     private TextView pass;
+    private TextView error;
     private Button login;
     private Button register;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         pass = findViewById(R.id.editTextTextPassword2);
         login = findViewById(R.id.button);
         register = findViewById(R.id.button2);
+        error = findViewById(R.id.error);
         mAuth = FirebaseAuth.getInstance();
 
         // when the user logs in, the sign in method is called on the firebase instance
@@ -59,12 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 String password = pass.getText().toString();
                 email = email.trim();
 
+                if (email.isEmpty() || password.isEmpty()) {
+                    error.setText("Please enter your email and password.");
+                    error.setVisibility(View.VISIBLE);
+                    return;
+                }
+
                 mAuth.signInWithEmailAndPassword( email, password )
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // if the sign in is successful, move the user to the main menu activity
+                                    error.setVisibility(View.INVISIBLE);
                                     Log.d( TAG, "signInWithEmail:success" );
                                     FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -75,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     // if sign in fails, display a message to the user
                                     Log.d( TAG, "signInWithEmail:failure", task.getException() );
-                                    Toast.makeText( MainActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    error.setText("Credentials were incorrect. Please try again.");
+                                    error.setVisibility(View.VISIBLE);
                                 }
                             }
                         });
