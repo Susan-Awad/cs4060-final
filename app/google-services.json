@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "878151790742",
+    "firebase_url": "https://cs4060-final-76094-default-rtdb.firebaseio.com",
+    "project_id": "cs4060-final-76094",
+    "storage_bucket": "cs4060-final-76094.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878151790742:android:e7facab21aa82926fa92b7",
+        "android_client_info": {
+          "package_name": "edu.uga.cs.cs4060_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPmVPmfoTxWIweJonAyBMetW_UF5FN0zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

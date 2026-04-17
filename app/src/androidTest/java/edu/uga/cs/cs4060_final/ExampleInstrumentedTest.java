@@ -1,4 +1,4 @@
-package edu.uga.cs4060_final;
+package edu.uga.cs.cs4060_final;
 
 import android.content.Context;
 
