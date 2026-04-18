@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,8 @@ public class MainMenu extends AppCompatActivity {
 
     private static final String TAG = "MainMenu";
     private FirebaseAuth mAuth;
+    private Button addNewItemBtn;
+    private Button shoppingListBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +41,14 @@ public class MainMenu extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
+        addNewItemBtn = findViewById(R.id.button5);
+        shoppingListBtn = findViewById(R.id.button4);
+
+        addNewItemBtn.setOnClickListener(new AddNewItemBtnClickListener());
+        shoppingListBtn.setOnClickListener(new ShoppingListBtnClickListener());
         final ActionBar actionBar = getSupportActionBar();
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,6 +81,8 @@ public class MainMenu extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add) {
             Toast.makeText(this, "Add Clicked", Toast.LENGTH_SHORT).show();
+            DialogFragment dialogFragment = new AddShoppingItemDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), null);
             return true;
         } else if (item.getItemId() == R.id.logout) {
             // if clicked, the logout button will sign the user out and take them to the login page
@@ -84,4 +96,21 @@ public class MainMenu extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
+    private class AddNewItemBtnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), NewShoppingItemActivity.class);
+            view.getContext().startActivity(intent);
+        } // onClick
+    } // AddNewItemBtnClickListener
+
+
+    private class ShoppingListBtnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), ViewShoppingListActivity.class);
+            view.getContext().startActivity(intent);
+        } // onClick
+    } // ShoppingListBtnClickListener
 }
