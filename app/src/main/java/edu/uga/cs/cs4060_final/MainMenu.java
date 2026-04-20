@@ -31,6 +31,7 @@ public class MainMenu extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button addNewItemBtn;
     private Button shoppingListBtn;
+    private Button shoppingBasketBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +47,11 @@ public class MainMenu extends AppCompatActivity {
 
         addNewItemBtn = findViewById(R.id.button5);
         shoppingListBtn = findViewById(R.id.button4);
+        shoppingBasketBtn = findViewById(R.id.button6);
 
         addNewItemBtn.setOnClickListener(new AddNewItemBtnClickListener());
         shoppingListBtn.setOnClickListener(new ShoppingListBtnClickListener());
+        shoppingBasketBtn.setOnClickListener(new ShoppingBasketBtnClickListener());
         final ActionBar actionBar = getSupportActionBar();
         mAuth = FirebaseAuth.getInstance();
 
@@ -113,4 +116,12 @@ public class MainMenu extends AppCompatActivity {
             view.getContext().startActivity(intent);
         } // onClick
     } // ShoppingListBtnClickListener
+
+    private class ShoppingBasketBtnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), ViewShoppingBasketActivity.class);
+            startActivity(intent);
+        } // onClick
+    } // ShoppingBasketBtnClickListener
 }

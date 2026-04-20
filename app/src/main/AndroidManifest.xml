@@ -49,6 +49,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenu"/>
         </activity>
+        <activity
+            android:name=".ViewShoppingBasketActivity"
+            android:parentActivityName=".MainMenu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenu"/>
+        </activity>
     </application>
 
 </manifest>
