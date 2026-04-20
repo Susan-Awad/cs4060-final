@@ -51,9 +51,9 @@ public class ViewShoppingListActivity extends AppCompatActivity
         setContentView(R.layout.view_shopping_list);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(0, systemBars.top, 0, 0);
-        return insets;
-    });
+            v.setPadding(0, systemBars.top, 0, 0);
+            return insets;
+        });
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -141,7 +141,43 @@ public class ViewShoppingListActivity extends AppCompatActivity
                             Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        else if( action == EditShoppingItemDialogFragment.DELETE ) {
+            Log.d( DEBUG_TAG, "Deleting job lead at: " + position + "(" + shoppingItem.getItemName() + ")" );
 
+            // Remove the shopping item from the list
+            shoppingItemList.remove( position );
+
+            // Update the recycler view to remove the deleted item from that view
+            recyclerAdapter.notifyItemRemoved( position );
+
+            // Delete the shopping item in Firebase.
+            DatabaseReference ref = database
+                    .getReference()
+                    .child( "shoppingList" )
+                    .child( shoppingItem.getKey() );
+
+            // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+            // to maintain shopping items.
+            ref.addListenerForSingleValueEvent( new ValueEventListener() {
+                @Override
+                public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
+                    dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d( DEBUG_TAG, "Deleted shopping item at: " + position + "(" + shoppingItem.getItemName() + ")" );
+                            Toast.makeText(getApplicationContext(), "Shopping item deleted for " + shoppingItem.getItemName(),
+                                    Toast.LENGTH_SHORT).show();                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled( @NonNull DatabaseError databaseError ) {
+                    Log.d( DEBUG_TAG, "Failed to delete shopping item at: " + position + "(" + shoppingItem.getItemName() + ")" );
+                    Toast.makeText(getApplicationContext(), "Failed to delete " + shoppingItem.getItemName(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     } // updateShoppingItem
 

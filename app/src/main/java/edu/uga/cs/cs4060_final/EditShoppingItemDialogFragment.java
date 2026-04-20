@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 // This is a DialogFragment to handle edits to a ShoppingItem.
 public class EditShoppingItemDialogFragment extends DialogFragment {
 
+    private static final String TAG = "EditShoppingItemDialogFragment";
     public static final int SAVE = 1; //update existing shopping item
     public static final int DELETE = 2; //delete an existing job lead
 
@@ -87,6 +89,9 @@ public class EditShoppingItemDialogFragment extends DialogFragment {
         // The Save button handler
         builder.setPositiveButton("SAVE", new SaveButtonClickListener());
 
+        // The Delete button handler
+        builder.setNeutralButton("DELETE", new DeleteButtonClickListener());
+
         // Create the AlertDialog and show it
         return builder.create();
 
@@ -110,5 +115,22 @@ public class EditShoppingItemDialogFragment extends DialogFragment {
             dismiss();
         } //onClick
     } //SaveButtonClickListener
+
+    private class DeleteButtonClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            ShoppingItem shoppingItem = new ShoppingItem(item, quantity);
+            shoppingItem.setKey(key);
+
+            // get the Activity's listener to add the new shopping item
+            EditShoppingItemDialogListener listener = (EditShoppingItemDialogListener) getActivity();
+            // add the new shopping item
+            Log.d(TAG, "In delete:" + shoppingItem);
+            listener.updateShoppingItem(position, shoppingItem, DELETE);
+
+            //close the dialog
+            dismiss();
+        } //onClick
+    }
 
 }
