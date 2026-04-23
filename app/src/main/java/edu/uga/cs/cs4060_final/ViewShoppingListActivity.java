@@ -231,6 +231,12 @@ public class ViewShoppingListActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflates the menu and adds the items to the action bar.
         getMenuInflater().inflate(R.menu.menu_options, menu);
+
+        // hide checkout option
+        MenuItem checkoutItem = menu.findItem(R.id.checkout);
+        if (checkoutItem != null) {
+            checkoutItem.setVisible(false);
+        }
         return true;
     }
 

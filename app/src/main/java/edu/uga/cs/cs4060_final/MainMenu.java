@@ -32,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
     private Button addNewItemBtn;
     private Button shoppingListBtn;
     private Button shoppingBasketBtn;
+    private Button purchasedItemsBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,10 +49,12 @@ public class MainMenu extends AppCompatActivity {
         addNewItemBtn = findViewById(R.id.button5);
         shoppingListBtn = findViewById(R.id.button4);
         shoppingBasketBtn = findViewById(R.id.button6);
+        purchasedItemsBtn = findViewById(R.id.button7);
 
         addNewItemBtn.setOnClickListener(new AddNewItemBtnClickListener());
         shoppingListBtn.setOnClickListener(new ShoppingListBtnClickListener());
         shoppingBasketBtn.setOnClickListener(new ShoppingBasketBtnClickListener());
+        purchasedItemsBtn.setOnClickListener(new PurchasedItemsBtnClickListener());
         final ActionBar actionBar = getSupportActionBar();
         mAuth = FirebaseAuth.getInstance();
 
@@ -77,6 +80,12 @@ public class MainMenu extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflates the menu and adds the items to the action bar.
         getMenuInflater().inflate(R.menu.menu_options, menu);
+
+        // hide checkout button
+        MenuItem addItem = menu.findItem(R.id.checkout);
+        if (addItem != null) {
+            addItem.setVisible(false);
+        }
         return true;
     }
 
@@ -124,4 +133,12 @@ public class MainMenu extends AppCompatActivity {
             startActivity(intent);
         } // onClick
     } // ShoppingBasketBtnClickListener
+
+    private class PurchasedItemsBtnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), ViewPurchasedListActivity.class);
+            startActivity(intent);
+        } // onClick
+    } // PurchasedItemsBtnClickListener
 }
