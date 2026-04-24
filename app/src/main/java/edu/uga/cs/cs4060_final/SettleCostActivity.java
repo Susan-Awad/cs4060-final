@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,8 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +41,7 @@ public class SettleCostActivity extends AppCompatActivity {
     private TextView eachRoommateCost;
     private TextView perRoommateCost;
     private TextView avgDifference;
-    private Button settle;
+
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(DEBUG_TAG, "onCreate()");
@@ -60,9 +57,9 @@ public class SettleCostActivity extends AppCompatActivity {
         eachRoommateCost = findViewById(R.id.eachSpending);
         perRoommateCost = findViewById(R.id.averagePerRoommate);
         avgDifference = findViewById(R.id.difference);
-        settle = findViewById(R.id.button11);
+        Button settle = findViewById(R.id.button11);
 
-        purchasedItemsList = new ArrayList<Purchase>();
+        purchasedItemsList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -114,9 +111,9 @@ public class SettleCostActivity extends AppCompatActivity {
                 (avgPerRoommate != 0 ?
                         avgPerRoommate - costByRoommate.get(user.getEmail()): 0.00) : 0 - avgPerRoommate;
         StringBuilder perSpendingString = new StringBuilder();
-        costByRoommate.forEach( (key, value) -> {
-            perSpendingString.append(key + "\n\t\t\tTotal Paid: $" + String.valueOf(value) + "\n");
-        });
+        costByRoommate.forEach( (key, value) ->
+            perSpendingString.append(key + "\n\t\t\tTotal Paid: $" + value + "\n")
+        );
 
         totalByAll.setText("$" + String.format("%.2f", totalCost));
         eachRoommateCost.setText(perSpendingString);

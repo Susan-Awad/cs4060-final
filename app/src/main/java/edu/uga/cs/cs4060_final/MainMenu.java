@@ -1,7 +1,5 @@
 package edu.uga.cs.cs4060_final;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +19,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,11 +26,6 @@ public class MainMenu extends AppCompatActivity {
 
     private static final String TAG = "MainMenu";
     private FirebaseAuth mAuth;
-    private Button addNewItemBtn;
-    private Button shoppingListBtn;
-    private Button shoppingBasketBtn;
-    private Button purchasedItemsBtn;
-    private Button settleCostBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,18 +39,17 @@ public class MainMenu extends AppCompatActivity {
 
         });
 
-        addNewItemBtn = findViewById(R.id.button5);
-        shoppingListBtn = findViewById(R.id.button4);
-        shoppingBasketBtn = findViewById(R.id.button6);
-        purchasedItemsBtn = findViewById(R.id.button7);
-        settleCostBtn = findViewById(R.id.button8);
+        Button addNewItemBtn = findViewById(R.id.button5);
+        Button shoppingListBtn = findViewById(R.id.button4);
+        Button shoppingBasketBtn = findViewById(R.id.button6);
+        Button purchasedItemsBtn = findViewById(R.id.button7);
+        Button settleCostBtn = findViewById(R.id.button8);
 
         addNewItemBtn.setOnClickListener(new AddNewItemBtnClickListener());
         shoppingListBtn.setOnClickListener(new ShoppingListBtnClickListener());
         shoppingBasketBtn.setOnClickListener(new ShoppingBasketBtnClickListener());
         purchasedItemsBtn.setOnClickListener(new PurchasedItemsBtnClickListener());
         settleCostBtn.setOnClickListener(new SettleCostBtnClickListener());
-        final ActionBar actionBar = getSupportActionBar();
         mAuth = FirebaseAuth.getInstance();
 
         mAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -116,7 +107,7 @@ public class MainMenu extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), NewShoppingItemActivity.class);
-            view.getContext().startActivity(intent);
+            startActivity(intent);
         } // onClick
     } // AddNewItemBtnClickListener
 
@@ -125,7 +116,7 @@ public class MainMenu extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), ViewShoppingListActivity.class);
-            view.getContext().startActivity(intent);
+            startActivity(intent);
         } // onClick
     } // ShoppingListBtnClickListener
 

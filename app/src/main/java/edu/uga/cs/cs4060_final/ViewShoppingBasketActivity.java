@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -65,7 +63,7 @@ public class ViewShoppingBasketActivity extends AppCompatActivity
         title.setText("Shopping Basket");
 
         // initialize the Shopping Item List
-        shoppingItemList = new ArrayList<ShoppingItem>();
+        shoppingItemList = new ArrayList<>();
 
         // use a linear layout manager for the recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
