@@ -289,6 +289,6 @@ public class ViewShoppingBasketActivity extends AppCompatActivity
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
 
         database1.getReference("purchasedList").push().setValue(purchase);
-        database1.getReference("shoppingBasket").removeValue();
+        database1.getReference("shoppingBasket/" + user.getUid()).removeValue();
     }
 }

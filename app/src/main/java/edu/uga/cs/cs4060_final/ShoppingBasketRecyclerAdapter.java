@@ -101,20 +101,6 @@ public class ShoppingBasketRecyclerAdapter extends RecyclerView.Adapter<Shopping
         holder.remove.setOnClickListener(new removeFromBasket(position));
     }
 
-    private class purchased implements View.OnClickListener {
-        private int pos;
-
-        public purchased(int pos) {
-            this.pos = pos;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-
-        }
-    }
-
     // Removes the item from the shopping basket and places it back in the shopping list
     private class removeFromBasket implements View.OnClickListener {
         private int pos;

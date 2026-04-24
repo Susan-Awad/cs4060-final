@@ -56,7 +56,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenu"/>
         </activity>
-
+        <activity
+            android:name=".SettleCostActivity"
+            android:parentActivityName=".MainMenu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenu"/>
+        </activity>
         <activity
             android:name=".ViewPurchasedListActivity"
             android:parentActivityName=".MainMenu">
