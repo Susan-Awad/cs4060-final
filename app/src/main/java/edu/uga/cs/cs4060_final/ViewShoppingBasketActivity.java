@@ -37,7 +37,8 @@ import java.util.List;
  */
 public class ViewShoppingBasketActivity extends AppCompatActivity
         implements AddShoppingItemDialogFragment.AddShoppingItemDialogListener,
-        EditShoppingItemDialogFragment.EditShoppingItemDialogListener {
+        EditShoppingItemDialogFragment.EditShoppingItemDialogListener,
+        CheckoutDialogFragment.CheckoutDialogListener{
 
     public static final String DEBUG_TAG = "ViewShoppingBasketActivity";
 
@@ -240,14 +241,20 @@ public class ViewShoppingBasketActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflates the menu and adds the items to the action bar.
         getMenuInflater().inflate(R.menu.menu_options, menu);
+
+        // hide add button
+        MenuItem addItem = menu.findItem(R.id.add);
+        if (addItem != null) {
+            addItem.setVisible(false);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add) {
-            Toast.makeText(this, "Add Clicked", Toast.LENGTH_SHORT).show();
-            DialogFragment dialogFragment = new AddShoppingItemDialogFragment();
+        if (item.getItemId() == R.id.checkout) {
+            Toast.makeText(this, "Checkout Clicked", Toast.LENGTH_SHORT).show();
+            DialogFragment dialogFragment = new CheckoutDialogFragment();
             dialogFragment.show(getSupportFragmentManager(), null);
             return true;
         } else if (item.getItemId() == R.id.logout) {
@@ -261,5 +268,27 @@ public class ViewShoppingBasketActivity extends AppCompatActivity
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void checkout(double totalPrice) {
+        if (shoppingItemList == null || shoppingItemList.isEmpty()) {
+            return;
+        } //if
+
+        String roommateEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String datePurchased = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
+                .format(new java.util.Date());
+
+        Purchase purchase = new Purchase(
+                roommateEmail,
+                totalPrice,
+                datePurchased,
+                new ArrayList<>(shoppingItemList)
+        );
+        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+
+        database1.getReference("purchasedList").push().setValue(purchase);
+        database1.getReference("shoppingBasket").removeValue();
     }
 }

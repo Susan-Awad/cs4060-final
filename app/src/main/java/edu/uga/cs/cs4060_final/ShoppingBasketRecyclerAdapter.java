@@ -54,7 +54,6 @@ public class ShoppingBasketRecyclerAdapter extends RecyclerView.Adapter<Shopping
 
             itemName = itemView.findViewById(R.id.itemName2);
             quantity = itemView.findViewById(R.id.quantity2);
-            purchased = itemView.findViewById(R.id.button11);
             remove = itemView.findViewById(R.id.button12);
         }
     }
@@ -98,7 +97,6 @@ public class ShoppingBasketRecyclerAdapter extends RecyclerView.Adapter<Shopping
             }
         });
 
-        holder.purchased.setOnClickListener(new purchased(position));
 
         holder.remove.setOnClickListener(new removeFromBasket(position));
     }
@@ -112,6 +110,7 @@ public class ShoppingBasketRecyclerAdapter extends RecyclerView.Adapter<Shopping
 
         @Override
         public void onClick(View v) {
+
 
         }
     }
