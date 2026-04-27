@@ -136,6 +136,7 @@ public class EditPurchaseDialogFragment extends DialogFragment {
             Purchase purchase = new Purchase();
             purchase.setKey(key);
             purchase.setRoomateEmaill(roommateEmail);
+            purchase.setDatePurchased(datePurchased);
             purchase.setTotalPrice(newPrice);
             purchase.setAllItems(allItems);
 
@@ -157,6 +158,7 @@ public class EditPurchaseDialogFragment extends DialogFragment {
             Purchase purchase = new Purchase();
             purchase.setKey(key);
             purchase.setRoomateEmaill(roommateEmail);
+            purchase.setDatePurchased(datePurchased);
             purchase.setTotalPrice(totalPrice);
             purchase.setAllItems(allItems);
 
